@@ -8,7 +8,7 @@ export interface Product {
   slug: string;
   tags: string[];
   title: string;
-  //todo: type: Type;
+  //MAYBE: type: Type;
   gender: Category;
 }
 

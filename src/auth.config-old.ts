@@ -1,7 +1,9 @@
+/*
 import NextAuth, { type NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import bcryptjs from 'bcryptjs';
 import { z } from 'zod';
+
 
 import prisma from './lib/prisma';
 
@@ -29,16 +31,15 @@ export const authConfig: NextAuthConfig = {
       return true;
     },
 
-    jwt({ token, user }) {
-      if ( user ) {
-        token.data = user;
+    async jwt({ token, account }) {
+      if ( account ) {
+        token.accessToken = account.accessToken;
       }
-
       return token;
     },
 
-    session({ session, token, user }) {
-      session.user = token.data as any;
+    async session({ session, token, user }) {
+      session.accesssToken = token.accessToken;
       return session;
     },
 
@@ -85,3 +86,5 @@ export const authConfig: NextAuthConfig = {
 
 
 export const {  signIn, signOut, auth, handlers } = NextAuth( authConfig );
+
+*/

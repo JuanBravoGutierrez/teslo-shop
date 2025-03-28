@@ -13,7 +13,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
 import './slideshow.css';
-import Image from 'next/image';
+//import Image from 'next/image';
 import { ProductImage } from '../product-image/ProductImage';
 
 

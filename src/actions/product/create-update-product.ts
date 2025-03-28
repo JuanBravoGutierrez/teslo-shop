@@ -1,7 +1,12 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
+//import prisma from '@/src/lib/prisma';
+
 import { revalidatePath } from 'next/cache';
+
 import { Gender, Product, Size } from '@prisma/client';
 import { z } from 'zod';
 import {v2 as cloudinary} from 'cloudinary';
@@ -31,9 +36,6 @@ const productSchema = z.object({
 
 
 
-
-
-
 export const createUpdateProduct = async( formData: FormData ) => {
 
   const data = Object.fromEntries( formData );
@@ -50,6 +52,8 @@ export const createUpdateProduct = async( formData: FormData ) => {
 
   const { id, ...rest } = product;
 
+
+
   try {
     const prismaTx = await prisma.$transaction( async (tx) => {
   
@@ -58,7 +62,7 @@ export const createUpdateProduct = async( formData: FormData ) => {
   
       if ( id ) {
         // Actualizar
-        product = await prisma.product.update({
+        product = await tx.product.update({
           where: { id },
           data: {
             ...rest,
@@ -114,7 +118,7 @@ export const createUpdateProduct = async( formData: FormData ) => {
     });
 
 
-    // Todo: RevalidatePaths
+    // RevalidatePaths
     revalidatePath('/admin/products');
     revalidatePath(`/admin/product/${ product.slug }`);
     revalidatePath(`/products/${ product.slug }`);
@@ -125,14 +129,21 @@ export const createUpdateProduct = async( formData: FormData ) => {
       product: prismaTx.product,
     }
 
+
+
     
   } catch (error) {
-    
+    console.error(error);
     return {
       ok: false,
       message: 'Revisar los logs, no se pudo actualizar/crear'
     }
+
+
+
   }
+
+
 
 }
 

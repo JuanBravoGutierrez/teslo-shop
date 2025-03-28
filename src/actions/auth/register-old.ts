@@ -1,3 +1,4 @@
+/*
 'use server';
 
 import prisma from '@/lib/prisma';
@@ -40,3 +41,5 @@ export const registerUser = async( name: string, email: string, password: string
   
 
 }
+
+*/

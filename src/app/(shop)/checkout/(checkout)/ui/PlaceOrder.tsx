@@ -42,14 +42,14 @@ export const PlaceOrder = () => {
 
 
     //! Server Action
-    const resp = await placeOrder( productsToOrder, address);
-    if ( !resp.ok ) {
+    const resp = await placeOrder(productsToOrder, address);
+    if (!resp.ok) {
       setIsPlacingOrder(false);
-      setErrorMessage(resp.message);
+      setErrorMessage(String(resp.message));
       return;
     }
 
-    //* Todo salio bien!
+    //* lo de atrás salió bien!
     clearCart();
     router.replace('/orders/' + resp.order?.id );
 

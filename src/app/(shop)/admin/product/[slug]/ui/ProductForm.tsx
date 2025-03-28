@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { Category, Product, ProductImage as ProductWithImage } from "@/interfaces";
-import Image from "next/image";
+//import Image from "next/image";
 import clsx from "clsx";
 import { createUpdateProduct, deleteProductImage } from "@/actions";
 import { useRouter } from 'next/navigation';
@@ -36,7 +36,7 @@ export const ProductForm = ({ product, categories }: Props) => {
   const {
     handleSubmit,
     register,
-    formState: { isValid },
+    //formState: { isValid },
     getValues,
     setValue,
     watch,
@@ -53,10 +53,24 @@ export const ProductForm = ({ product, categories }: Props) => {
   watch("sizes");
 
   const onSizeChanged = (size: string) => {
+    let sizes = getValues("sizes") || [];
+  
+    if (sizes.includes(size)) {
+      sizes = sizes.filter((s) => s !== size); // Elimina la talla si ya está
+    } else {
+      sizes = [...sizes, size]; // Agrega la talla si no está
+    }
+  
+    setValue("sizes", sizes);
+  };
+
+  /*
+  const onSizeChanged = (size: string) => {
     const sizes = new Set(getValues("sizes"));
     sizes.has(size) ? sizes.delete(size) : sizes.add(size);
     setValue("sizes", Array.from(sizes));
   };
+  */
 
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData();

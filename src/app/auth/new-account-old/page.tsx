@@ -1,4 +1,6 @@
+/*
 import { titleFont } from '@/config/fonts';
+// MAYBE Verificar esta ruta de registerform
 import { RegisterForm } from './ui/RegisterForm';
 
 export default function NewAccountPage() {
@@ -11,3 +13,5 @@ export default function NewAccountPage() {
     </div>
   );
 }
+  
+*/

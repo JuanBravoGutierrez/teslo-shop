@@ -1,29 +1,9 @@
-import { auth } from '@/auth.config';
-import { redirect } from 'next/navigation';
-
-
-export default async function ShopLayout( { children }: {
-  children: React.ReactNode;
-} ) {
-
-
-  const session = await auth();
-
-
-  if ( session?.user ) {
-    redirect('/');
-  }
+const AuthLayout = ({
+    children,
+  }: Readonly<{
+    children: React.ReactNode;
+  }>) => {
+    return <div className="grid place-items-center min-h-screen">{children}</div>;
+  };
+  export default AuthLayout;
   
-
-
-  return (
-
-    <main className="flex justify-center">
-      <div className="w-full sm:w-[350px] px-10">
-
-        { children }
-
-      </div>
-    </main>
-  );
-}

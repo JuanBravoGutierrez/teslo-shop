@@ -1,14 +1,20 @@
+import FormLogin from "@/components/auth/form-login";
 
-import { titleFont } from '@/config/fonts';
-import { LoginForm } from './ui/LoginForm';
+export default async function LoginPage(
+  { searchParams, }: { searchParams: { verified: string; error: string }; }) {
+  //const isVerified = searchParams.verified === "true";
+  //const OAuthAccountNotLinked = searchParams.error === "OAuthAccountNotLinked";
 
-export default function LoginPage() {
+  // Espera a que searchParams esté resuelto
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const isVerified = resolvedSearchParams.verified === "true";
+  const OAuthAccountNotLinked =
+    resolvedSearchParams.error === "OAuthAccountNotLinked";
+
   return (
-    <div className="flex flex-col min-h-screen pt-32 sm:pt-52">
-
-      <h1 className={ `${ titleFont.className } text-4xl mb-5` }>Ingresar</h1>
-
-      <LoginForm />
-    </div>
+    <FormLogin
+      isVerified={isVerified}
+      OAuthAccountNotLinked={OAuthAccountNotLinked}
+    />
   );
-}
+};

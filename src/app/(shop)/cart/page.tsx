@@ -1,8 +1,12 @@
+export const dynamic = 'force-dynamic'; 
+
 import Link from 'next/link';
 
 
 
 import { Title } from '@/components';
+
+//Verificar las siguiemtes rutas
 import { ProductsInCart } from './ui/ProductsInCart';
 import { OrderSummary } from './ui/OrderSummary';
 
@@ -13,8 +17,6 @@ export default function CartPage() {
 
 
   // redirect('/empty');
-
-
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">

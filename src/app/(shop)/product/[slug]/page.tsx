@@ -1,14 +1,19 @@
-export const revalidate = 604800; //7 días
-import { Metadata, ResolvingMetadata } from "next";
+//export const revalidate = 604800; //7 días
+
+export const dynamic = 'force-dynamic';
+
+import { Metadata } from "next";
+//import { ResolvingMetadata } from "next";
 
 import { notFound } from "next/navigation";
 
 import { titleFont } from "@/config/fonts";
+
 import {
   ProductMobileSlideshow,
   ProductSlideshow,
-  QuantitySelector,
-  SizeSelector,
+  //QuantitySelector,
+  //SizeSelector,
   StockLabel,
 } from "@/components";
 import { getProductBySlug } from "@/actions";
@@ -22,18 +27,23 @@ interface Props {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
+  //parent: ResolvingMetadata
 ): Promise<Metadata> {
   // read route params
-  const slug = params.slug;
+
+  const resolvedParams = await Promise.resolve(params);
+  const { slug } = resolvedParams; // con las llaves slug es un string
 
   // fetch data
   const product = await getProductBySlug(slug);
-
+  if (!product) {
+    notFound();
+  }
   // optionally access and extend (rather than replace) parent metadata
   // const previousImages = (await parent).openGraph?.images || []
 
   return {
+    metadataBase: new URL('https://misitioweb.com'),
     title: product?.title ?? "Producto no encontrado",
     description: product?.description ?? "",
     openGraph: {
@@ -46,7 +56,8 @@ export async function generateMetadata(
 }
 
 export default async function ProductBySlugPage({ params }: Props) {
-  const { slug } = params;
+  const resolvedParams = await Promise.resolve(params);
+  const { slug } = resolvedParams; // ahora slug es un string
   const product = await getProductBySlug(slug);
   console.log(product);
 

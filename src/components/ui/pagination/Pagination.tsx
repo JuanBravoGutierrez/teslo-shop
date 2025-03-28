@@ -69,7 +69,8 @@ export const Pagination = ({ totalPages }: Props) => {
           </li>
 
           {
-            allPages.map( (page, index) => (
+            //allPages.map( (page, index) => (
+            allPages.map( (page) => (
 
               <li key={ page } className="page-item">
                 <Link

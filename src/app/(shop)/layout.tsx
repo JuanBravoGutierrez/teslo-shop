@@ -11,7 +11,6 @@ export default function ShopLayout( { children }: {
 
       <div className="px-0 sm:px-10">
         { children }
-
       </div>
 
       <Footer />

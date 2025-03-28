@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { getOrderById } from "@/actions/order/get-order-by-id";
 import { currencyFormat } from "@/utils";
-import { OrderStatus, PayPalButton, Title } from "@/components";
+import { OrderStatus, Title } from "@/components";
 
 interface Props {
   params: {
@@ -14,7 +14,7 @@ interface Props {
 export default async function OrdersByIdPage({ params }: Props) {
   const { id } = params;
 
-  // Todo: Llamar el server action
+  // MAYBECURSO: Llamar el server action
 
   const { ok, order } = await getOrderById(id);
 
@@ -108,13 +108,6 @@ export default async function OrdersByIdPage({ params }: Props) {
               </span>
             </div>
 
-            <div className="mt-5 mb-2 w-full">
-              {order?.isPaid ? (
-                <OrderStatus isPaid={order?.isPaid ?? false} />
-              ) : (
-                <PayPalButton amount={order!.total} orderId={order!.id} />
-              )}
-            </div>
           </div>
         </div>
       </div>

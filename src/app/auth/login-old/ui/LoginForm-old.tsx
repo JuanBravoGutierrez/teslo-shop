@@ -1,10 +1,12 @@
+/*
 "use client";
 
 import { useEffect } from 'react';
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
 
-import { authenticate } from "@/actions";
+//  RESOLVER
+import { authenticate } from "@/src/actions/auth/auth-actions";
 import { IoInformationOutline } from "react-icons/io5";
 import clsx from 'clsx';
 // import { useRouter } from 'next/navigation';
@@ -60,11 +62,9 @@ export const LoginForm = () => {
       </div>
 
         <LoginButton />
-      {/* <button type="submit" className="btn-primary">
-        Ingresar
-      </button> */}
-
-      {/* divisor l ine */}
+      
+      /* línea divisoría */
+      /*
       <div className="flex items-center my-5">
         <div className="flex-1 border-t border-gray-500"></div>
         <div className="px-2 text-gray-800">O</div>
@@ -94,3 +94,4 @@ function LoginButton() {
     </button>
   );
 }
+*/

@@ -7,12 +7,7 @@ export * from './products/product-grid/ProductGridItem';
 
 export * from './orders/OrderStatus';
 
-
-export * from './paypal/PayPalButton'
-
-
-export * from './providers/Providers';
-
+export * from './provider/Provider';
 
 export * from './product/slideshow/ProductSlideshow';
 export * from './product/slideshow/ProductMobileSlideshow';
@@ -28,3 +23,4 @@ export * from './ui/pagination/Pagination'
 export * from './ui/sidebar/Sidebar';
 export * from './ui/title/Title';
 export * from './ui/top-menu/TopMenu';
+

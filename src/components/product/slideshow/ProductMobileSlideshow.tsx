@@ -3,7 +3,8 @@
 import Image from 'next/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
+//import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, FreeMode, Pagination } from 'swiper/modules';
 
 
 import 'swiper/css';
@@ -45,11 +46,11 @@ export const ProductMobileSlideshow = ( { images, title, className }: Props ) =>
           images.map( image => (
             <SwiperSlide key={ image }>
               <Image
-                width={ 600 }
-                height={ 500 }
+                width={ 480 }
+                height={ 400 }
                 src={ `/products/${ image }` }
                 alt={ title }
-                className="object-fill"
+                className="object-fill noOverride"
               />
             </SwiperSlide>
 

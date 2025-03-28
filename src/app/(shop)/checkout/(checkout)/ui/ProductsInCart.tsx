@@ -9,9 +9,11 @@ import { currencyFormat } from '@/utils';
 
 
 
+
+
 export const ProductsInCart = () => {
 
-
+  console.log('ESTOY EN : ProductsInCart.tsx');
 
   const [loaded, setLoaded] = useState(false);
   const productsInCart = useCartStore( state => state.cart );
@@ -42,6 +44,7 @@ export const ProductsInCart = () => {
             }}
             alt={product.title}
             className="mr-5 rounded"
+            priority // Marca la imagen como prioridad para LCP
           />
 
           <div>

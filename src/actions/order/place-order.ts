@@ -1,8 +1,18 @@
 "use server";
-import prisma from "@/lib/prisma";
 
-import { auth } from "@/auth.config";
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
+//import { Prisma } from '@prisma/client'
+
+//import prisma from "@/src/lib/prisma";
+//import { auth } from "@/auth.config";
+
 import type { Address, Size } from "@/interfaces";
+
+//import type { Product } from "@/src/interfaces/product.interface";
+
+import { auth } from '../../../auth';
 
 interface ProductToOrder {
   productId: string;
@@ -27,6 +37,7 @@ export const placeOrder = async (
 
   // Obtener la información de los productos
   // Nota: recuerden que podemos llevar 2+ productos con el mismo ID
+  //const products: Product[] = await prisma.product.findMany({
   const products = await prisma.product.findMany({
     where: {
       id: {
@@ -92,6 +103,8 @@ export const placeOrder = async (
         }
       });
 
+
+
       // 2. Crear la orden - Encabezado - Detalles
       const order = await tx.order.create({
         data: {
@@ -108,13 +121,15 @@ export const placeOrder = async (
                 size: p.size,
                 productId: p.productId,
                 price:
-                  products.find((product) => product.id === p.productId)
+                  products?.find((product) => String(product.id) === String(p.productId))
                     ?.price ?? 0,
               })),
             },
           },
         },
       });
+
+
 
       // Validar, si el price es cero, entonces, lanzar un error
 
@@ -144,10 +159,15 @@ export const placeOrder = async (
     }
 
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if (error instanceof Error)
+      return {
+        ok: false,
+        message: error.message,
+      };
     return {
       ok: false,
-      message: error?.message,
+      message: 'Unknown error',
     };
   }
 };

@@ -3,12 +3,13 @@ export * from './address/delete-user-address';
 export * from './address/get-user-address';
 export * from './address/set-user-address';
 
+// Esquema seguridad del video original
+//export * from './auth/login';
+//export * from './auth/logout';
+//export * from './auth/register';
 
-
-
-export * from './auth/login';
-export * from './auth/logout';
-export * from './auth/register';
+// Esquema segridad del video de seguridad auth V5
+export * from './auth/auth-actions';
 
 export * from './category/get-categories';
 
@@ -19,8 +20,6 @@ export * from './order/get-order-by-id';
 export * from './order/get-paginated-orders';
 export * from './order/get-orders-by-user';
 
-export * from './payments/set-transaction-id';
-export * from './payments/paypal-check-payment';
 
 
 export * from './product/delete-product-image';

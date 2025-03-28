@@ -1,9 +1,10 @@
 'use server';
 
-import { auth } from '@/auth.config';
+//import { auth } from '@/auth.config';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
+import { auth } from '../../../auth';
 
 export const changeUserRole = async( userId: string, role: string ) => {
 
@@ -29,6 +30,9 @@ export const changeUserRole = async( userId: string, role: string ) => {
         role: newRole
       }
     })
+    if ( !user ) {
+      throw new Error('No se encontró el usuario');
+      }
 
     revalidatePath('/admin/users');
 
