@@ -1,8 +1,6 @@
-import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
-import authConfig from "./auth.config";
+import { auth } from "./auth";
 
-const { auth } = NextAuth(authConfig);
 
 const publicRoutes = ["/", "/prices"];
 const authRoutes = ["/login", "/register"];
@@ -11,8 +9,6 @@ const apiAuthPrefix = "/api/auth";
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-
-  console.log({ isLoggedIn, path: nextUrl.pathname });
 
   // Permitir todas las rutas de API de autenticación
   if (nextUrl.pathname.startsWith(apiAuthPrefix)) {

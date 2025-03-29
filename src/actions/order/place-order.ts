@@ -3,14 +3,7 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-//import { Prisma } from '@prisma/client'
-
-//import prisma from "@/src/lib/prisma";
-//import { auth } from "@/auth.config";
-
 import type { Address, Size } from "@/interfaces";
-
-//import type { Product } from "@/src/interfaces/product.interface";
 
 import { auth } from '../../../auth';
 

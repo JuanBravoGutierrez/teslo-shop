@@ -1,7 +1,7 @@
 'use server';
 
 //import { auth } from './auth.config';
-import prisma from '@/lib/prisma';
+import { db } from "src/lib/auth/db";
 
 import { auth } from '../../../auth';
 
@@ -21,7 +21,7 @@ export const getOrderById = async( id: string ) => {
 
   try {
     
-    const order = await prisma.order.findUnique({
+    const order = await db.order.findUnique({
       where: { id },
       include: {
         OrderAddress: true,

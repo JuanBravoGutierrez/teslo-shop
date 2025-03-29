@@ -1,7 +1,7 @@
 'use server';
 
 //import { auth } from '@/auth.config';
-import prisma from '@/lib/prisma';
+import { db } from "src/lib/auth/db";
 
 import { auth } from '../../../auth';
 
@@ -17,7 +17,7 @@ export const getPaginatedOrders = async() => {
     }
   }
 
-  const orders = await prisma.order.findMany({
+  const orders = await db.order.findMany({
     orderBy: {
       createdAt: 'desc'
     },

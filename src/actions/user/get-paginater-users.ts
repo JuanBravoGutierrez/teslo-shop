@@ -1,8 +1,6 @@
 'use server';
 
-//import { auth } from '@/auth.config';
-import prisma from '@/lib/prisma';
-
+import { db } from "src/lib/auth/db";
 import { auth } from '../../../auth';
 
 export const getPaginatedUsers = async() => {
@@ -16,7 +14,7 @@ export const getPaginatedUsers = async() => {
     }
   }
   
-  const users = await prisma.user.findMany({
+  const users = await db.user.findMany({
     orderBy: {
       name: 'desc'
     }
@@ -26,6 +24,5 @@ export const getPaginatedUsers = async() => {
     ok: true,
     users: users
   }
-
 
 }

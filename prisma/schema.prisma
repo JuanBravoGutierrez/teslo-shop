@@ -81,6 +81,17 @@ model User {
   // Relaciones
   Order    Order[]
   accounts Account[]
+
+  // Relaciones requeridas por NextAuth
+  sessions Session[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  expires      DateTime
 }
 
 model Account {

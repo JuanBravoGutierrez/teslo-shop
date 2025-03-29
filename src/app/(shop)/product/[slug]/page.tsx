@@ -59,7 +59,6 @@ export default async function ProductBySlugPage({ params }: Props) {
   const resolvedParams = await Promise.resolve(params);
   const { slug } = resolvedParams; // ahora slug es un string
   const product = await getProductBySlug(slug);
-  console.log(product);
 
   if (!product) {
     notFound();

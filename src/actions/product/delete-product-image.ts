@@ -1,6 +1,6 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import { db } from "src/lib/auth/db";
 import {v2 as cloudinary} from 'cloudinary';
 import { revalidatePath } from 'next/cache';
 cloudinary.config( process.env.CLOUDINARY_URL ?? '' );
@@ -23,7 +23,7 @@ export const deleteProductImage = async( imageId: number, imageUrl: string ) => 
   try {
 
     await cloudinary.uploader.destroy( imageName );
-    const deletedImage = await prisma.productImage.delete({
+    const deletedImage = await db.productImage.delete({
       where: {
         id: imageId
       },

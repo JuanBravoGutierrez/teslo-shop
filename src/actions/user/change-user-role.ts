@@ -1,7 +1,7 @@
 'use server';
 
 //import { auth } from '@/auth.config';
-import prisma from '@/lib/prisma';
+import { db } from "src/lib/auth/db";
 import { revalidatePath } from 'next/cache';
 
 import { auth } from '../../../auth';
@@ -22,7 +22,7 @@ export const changeUserRole = async( userId: string, role: string ) => {
     const newRole = role === 'admin' ? 'admin':'user';
 
 
-    const user = await prisma.user.update({
+    const user = await db.user.update({
       where: {
         id: userId
       },

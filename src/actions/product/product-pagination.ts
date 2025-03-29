@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/lib/prisma";
+import { db } from "src/lib/auth/db";
 import { Gender } from "@prisma/client";
 
 interface PaginationOptions {
@@ -19,7 +19,7 @@ export const getPaginatedProductsWithImages = async ({
 
   try {
     // 1. Obtener los productos
-    const products = await prisma.product.findMany({
+    const products = await db.product.findMany({
       take: take,
       skip: (page - 1) * take,
       include: {
@@ -38,7 +38,7 @@ export const getPaginatedProductsWithImages = async ({
 
     // 2. Obtener el total de páginas
 
-    const totalCount = await prisma.product.count({
+    const totalCount = await db.product.count({
       where: {
         gender: gender,
       },

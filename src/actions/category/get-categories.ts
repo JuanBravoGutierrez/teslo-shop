@@ -1,13 +1,13 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import { db } from "src/lib/auth/db";
 
 
 
 export const getCategories =  async()=> {
 
   try {
-      const categories = await prisma.category.findMany({
+      const categories = await db.category.findMany({
         orderBy: {
           name: 'asc'
         }

@@ -13,18 +13,12 @@ import { currencyFormat } from '@/utils';
 
 export const ProductsInCart = () => {
 
-  console.log('ESTOY EN : ProductsInCart.tsx');
-
   const [loaded, setLoaded] = useState(false);
   const productsInCart = useCartStore( state => state.cart );
-
 
   useEffect(() => {
     setLoaded(true) ;
   },[]);
-
-
-
 
   if( !loaded ) {
     return <p>Loading...</p>

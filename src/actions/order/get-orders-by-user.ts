@@ -1,7 +1,7 @@
 'use server';
 
 //import { auth } from '@/auth.config';
-import prisma from '@/lib/prisma';
+import { db } from "src/lib/auth/db";
 
 import { auth } from '../../../auth';
 
@@ -18,7 +18,7 @@ export const getOrdersByUser = async() => {
     }
   }
 
-  const orders = await prisma.order.findMany({
+  const orders = await db.order.findMany({
     where: {
       userId: session.user.id
     },

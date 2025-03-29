@@ -1,13 +1,11 @@
 export const dynamic = 'force-dynamic';    
 
-export const revalidate = 60; // 60 segundos
-
-
 import { redirect } from 'next/navigation';
+
+//export const revalidate = 60; // 60 segundos
 
 import { getPaginatedProductsWithImages } from '@/actions';
 import { Pagination, ProductGrid, Title } from '@/components';
-
 
 interface Props {
   searchParams?: {
@@ -15,11 +13,7 @@ interface Props {
   }
 }
 
-
 export default async function Home({ searchParams }: Props) {
-
-  // Verificar si searchParams existe y tiene la clave 'page'
-  //const page = searchParams?.page ? parseInt(searchParams.page, 10) || 1 : 1;
 
   //Asegurarte de esperar (await) las searchParams si estas vienen como promesa
   const resolvedSearchParams = await Promise.resolve(searchParams);       
@@ -29,11 +23,9 @@ export default async function Home({ searchParams }: Props) {
   //const { products, currentPage, totalPages } = await getPaginatedProductsWithImages({ page });
   const { products, totalPages } = await getPaginatedProductsWithImages({ page });
 
-
   if ( products.length === 0 ) {
     redirect('/');
   }
-
 
   return (
     <>
@@ -46,7 +38,6 @@ export default async function Home({ searchParams }: Props) {
       <ProductGrid 
         products={ products }
       />
-
 
       <Pagination totalPages={ totalPages } />
       

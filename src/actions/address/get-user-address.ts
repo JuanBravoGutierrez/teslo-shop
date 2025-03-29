@@ -1,12 +1,12 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import { db } from "src/lib/auth/db";
 
 
 export const getUserAddress = async( userId: string ) => {
   try {
 
-    const address = await prisma.userAddress.findUnique({
+    const address = await db.userAddress.findUnique({
       where: { userId }
     });
 

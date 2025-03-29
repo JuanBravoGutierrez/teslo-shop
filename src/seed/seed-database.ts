@@ -1,4 +1,4 @@
-import prisma from '../lib/prisma';
+import { db } from "../lib/auth/db";
 import { initialData } from './seed';
 import { countries } from './seed-countries';
 
@@ -9,28 +9,28 @@ async function main() {
   // 1. Borrar registros previos
   // await Promise.all( [
 
-  await prisma.orderAddress.deleteMany();
-  await prisma.orderItem.deleteMany();
-  await prisma.order.deleteMany();
+  await db.orderAddress.deleteMany();
+  await db.orderItem.deleteMany();
+  await db.order.deleteMany();
 
 
-  await prisma.userAddress.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.country.deleteMany();
+  await db.userAddress.deleteMany();
+  await db.user.deleteMany();
+  await db.country.deleteMany();
 
-  await prisma.productImage.deleteMany();
-  await prisma.product.deleteMany();
-  await prisma.category.deleteMany();
+  await db.productImage.deleteMany();
+  await db.product.deleteMany();
+  await db.category.deleteMany();
   // ]);
   
   const { categories, products, users } = initialData;
 
 
-  await prisma.user.createMany({
+  await db.user.createMany({
     data: users
   });
 
-  await prisma.country.createMany({
+  await db.country.createMany({
     data: countries
   });
 
@@ -42,12 +42,12 @@ async function main() {
   // }
   const categoriesData = categories.map( (name) => ({ name }));
   
-  await prisma.category.createMany({
+  await db.category.createMany({
     data: categoriesData
   });
 
   
-  const categoriesDB = await prisma.category.findMany();
+  const categoriesDB = await db.category.findMany();
   
   const categoriesMap = categoriesDB.reduce( (map, category) => {
     map[ category.name.toLowerCase()] = category.id;
@@ -62,7 +62,7 @@ async function main() {
 
     const { type, images, ...rest } = product;
 
-    const dbProduct = await prisma.product.create({
+    const dbProduct = await db.product.create({
       data: {
         ...rest,
         categoryId: categoriesMap[type]
@@ -76,7 +76,7 @@ async function main() {
       productId: dbProduct.id
     }));
 
-    await prisma.productImage.createMany({
+    await db.productImage.createMany({
       data: imagesData
     });
 
