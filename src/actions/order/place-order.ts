@@ -1,7 +1,6 @@
 "use server";
 
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import { db } from "src/lib/auth/db";
 
 import type { Address, Size } from "@/interfaces";
 
@@ -17,21 +16,37 @@ export const placeOrder = async (
   productIds: ProductToOrder[],
   address: Address
 ) => {
+
   const session = await auth();
-  const userId = session?.user.id;
+  console.log('JBG OJO OJO OJO pace-order.ts session=', session);
+
+  //const userId = session?.user.id;
 
   // Verificar sesión de usuario
-  if (!userId) {
+  if (!session) {
     return {
       ok: false,
-      message: "No hay sesión de usuario",
+      message: "No hay sesión de usuario en pace-order.ts",
     };
   }
+  // Obtener el ID del usuario
+  const userRecord = await db.user.findUnique({
+    where: { email: session.user.email! }, });
+  
+  if (!userRecord) {
+    return {
+      ok: false,
+      message: "No hay user en pace-order.ts",
+    };
+  }
+  const userId = userRecord?.id;
+  console.log('JBG OJO OJO OJO pace-order.ts OJO => userId=', userId);
+
 
   // Obtener la información de los productos
   // Nota: recuerden que podemos llevar 2+ productos con el mismo ID
   //const products: Product[] = await prisma.product.findMany({
-  const products = await prisma.product.findMany({
+  const products = await db.product.findMany({
     where: {
       id: {
         in: productIds.map((p) => p.productId),
@@ -48,7 +63,10 @@ export const placeOrder = async (
       const productQuantity = item.quantity;
       const product = products.find((product) => product.id === item.productId);
 
-      if (!product) throw new Error(`${item.productId} no existe - 500`);
+      if (!product) {
+        console.error(`Producto ${item.productId} no encontrado`);
+        return totals; // o lanzar error si prefieres detener la operación
+      }
 
       const subTotal = product.price * productQuantity;
 
@@ -64,7 +82,7 @@ export const placeOrder = async (
   // Crear la transacción de base de datos
   try {
 
-    const prismaTx = await prisma.$transaction(async (tx) => {
+    const prismaTx = await db.$transaction(async (tx) => {
       // 1. Actualizar el stock de los productos
       const updatedProductsPromises = products.map((product) => {
         //  Acumular los valores

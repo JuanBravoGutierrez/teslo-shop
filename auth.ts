@@ -16,7 +16,7 @@ import { sendEmailVerification } from "./src/lib/auth/mail";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({  
   adapter: PrismaAdapter(db) as Adapter,
-  session: { strategy: "database" },
+  session: { strategy: "jwt" },
   secret: process.env.AUTH_SECRET,
   providers: [
     Google,

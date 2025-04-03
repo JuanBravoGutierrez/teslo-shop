@@ -25,6 +25,12 @@ export const setUserAddress = async (address: Address, userId: string) => {
 const createOrReplaceAddress = async (address: Address, userId: string) => {
   try {
 
+    // Verifica que el usuario exista (esto es opcional si ya lo haces en otro lado)
+    const userExists = await db.user.findUnique({ where: { id: userId } });
+    if (!userExists) {
+      throw new Error("El usuario no existe dentro de createOrReplaceAddress.");
+    }
+
     const storedAddress = await db.userAddress.findUnique({
       where: { userId },
     });

@@ -1,7 +1,6 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import { db } from "src/lib/auth/db";
 
 import { revalidatePath } from 'next/cache';
 
@@ -51,7 +50,7 @@ export const createUpdateProduct = async( formData: FormData ) => {
 
 
   try {
-    const prismaTx = await prisma.$transaction( async (tx) => {
+    const prismaTx = await db.$transaction( async (tx) => {
   
       let product: Product;
       const tagsArray = rest.tags.split(',').map( tag => tag.trim().toLowerCase() );
@@ -73,7 +72,7 @@ export const createUpdateProduct = async( formData: FormData ) => {
   
       } else {
         // Crear
-        product = await prisma.product.create({
+        product = await db.product.create({
           data: {
             ...rest,
             sizes: {
@@ -96,7 +95,7 @@ export const createUpdateProduct = async( formData: FormData ) => {
           throw new Error('No se pudo cargar las imágenes, rollingback');
         }
 
-        await prisma.productImage.createMany({
+        await db.productImage.createMany({
           data: images.map( image => ({
             url: image!,
             productId: product.id,
